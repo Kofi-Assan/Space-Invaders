@@ -53,7 +53,6 @@ func _on_cooldown_timeout() -> void:
 	max_shot = 0
 	pass # Replace with function body.
 
-#1ST ENEMY
 func _on_friendly_cone_body_entered(body: CharacterBody2D) -> void:
 	enemy_sight.enabled = false
 	print(\"Friendly\")
