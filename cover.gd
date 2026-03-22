@@ -11,7 +11,6 @@ func _ready() -> void:
 	move_tween.tween_property(self, "rotation_degrees", 360, rotate_timer).as_relative()
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
@@ -24,7 +23,9 @@ func _on_emit_particles_up_area_entered(area: Area2D) -> void:
 	%Bullet_Hit_up.emitting = true
 	hits_taken += 1
 	$AnimationPlayer.play("impact")
-	if hits_taken == 3:
+	%Resume_Rotate_Timer.start()
+	stop_rotate()
+	if hits_taken == 4:
 		destroyed()
 	pass # Replace with function body.
 
@@ -33,7 +34,9 @@ func _on_emit_particles_left_area_entered(area: Area2D) -> void:
 	%Bullet_Hit_left.emitting = true
 	hits_taken += 1
 	$AnimationPlayer.play("impact")
-	if hits_taken == 3:
+	%Resume_Rotate_Timer.start()
+	stop_rotate()
+	if hits_taken == 4:
 		destroyed()
 	pass # Replace with function body.
 
@@ -42,7 +45,9 @@ func _on_emit_particles_right_area_entered(area: Area2D) -> void:
 	%Bullet_Hit_right.emitting = true
 	hits_taken += 1
 	$AnimationPlayer.play("impact")
-	if hits_taken == 3:
+	%Resume_Rotate_Timer.start()
+	stop_rotate()
+	if hits_taken == 4:
 		destroyed()
 	pass # Replace with function body.
 
@@ -51,6 +56,17 @@ func _on_emit_particles_bottom_area_entered(area: Area2D) -> void:
 	%Bullet_Hit_bottom.emitting = true
 	hits_taken += 1
 	$AnimationPlayer.play("impact")
-	if hits_taken == 3:
+	%Resume_Rotate_Timer.start()
+	stop_rotate()
+	if hits_taken == 4:
 		destroyed()
+	pass # Replace with function body.
+
+func stop_rotate():
+	var rotate_stop = create_tween()
+	rotate_stop.tween_property(self, "rotation_degrees", 0, rotate_timer).as_relative()
+	pass
+
+func _on_resume_rotate_timer_timeout() -> void:
+	_ready()
 	pass # Replace with function body.

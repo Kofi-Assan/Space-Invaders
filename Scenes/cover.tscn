@@ -95,7 +95,7 @@ libraries/ = SubResource("AnimationLibrary_6wsw5")
 position = Vector2(0, -6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Emit_Particles_up" unique_id=2035230589]
-position = Vector2(-2, -9)
+position = Vector2(-2, -12)
 rotation = -1.5707964
 shape = SubResource("CapsuleShape2D_tu51b")
 
@@ -119,7 +119,7 @@ color = Color(0.5176471, 0.49411765, 0.5294118, 1)
 [node name="Emit_Particles_left" type="Area2D" parent="." unique_id=1914764881]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Emit_Particles_left" unique_id=2081293567]
-position = Vector2(-16, 0)
+position = Vector2(-22, 0)
 shape = SubResource("CapsuleShape2D_tu51b")
 
 [node name="Bullet_Hit_left" type="CPUParticles2D" parent="Emit_Particles_left" unique_id=1858517793]
@@ -142,7 +142,7 @@ color = Color(0.5176471, 0.49411765, 0.5294118, 1)
 [node name="Emit_Particles_right" type="Area2D" parent="." unique_id=698417818]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Emit_Particles_right" unique_id=1218022571]
-position = Vector2(12, 0)
+position = Vector2(18, 0)
 shape = SubResource("CapsuleShape2D_tu51b")
 
 [node name="Bullet_Hit_right" type="CPUParticles2D" parent="Emit_Particles_right" unique_id=805938922]
@@ -165,7 +165,7 @@ color = Color(0.5176471, 0.49411765, 0.5294118, 1)
 [node name="Emit_Particles_bottom" type="Area2D" parent="." unique_id=725187912]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Emit_Particles_bottom" unique_id=1918537403]
-position = Vector2(-2, 15)
+position = Vector2(-2, 17)
 rotation = -1.5707964
 shape = SubResource("CapsuleShape2D_tu51b")
 
@@ -186,7 +186,12 @@ scale_amount_max = 6.0
 scale_amount_curve = SubResource("Curve_tu51b")
 color = Color(0.5176471, 0.49411765, 0.5294118, 1)
 
+[node name="Resume_Rotate_Timer" type="Timer" parent="." unique_id=535559103]
+unique_name_in_owner = true
+one_shot = true
+
 [connection signal="area_entered" from="Emit_Particles_up" to="." method="_on_emit_particles_up_area_entered"]
 [connection signal="area_entered" from="Emit_Particles_left" to="." method="_on_emit_particles_left_area_entered"]
 [connection signal="area_entered" from="Emit_Particles_right" to="." method="_on_emit_particles_right_area_entered"]
 [connection signal="area_entered" from="Emit_Particles_bottom" to="." method="_on_emit_particles_bottom_area_entered"]
+[connection signal="timeout" from="Resume_Rotate_Timer" to="." method="_on_resume_rotate_timer_timeout"]

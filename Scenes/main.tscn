@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://bmnsshbidjbrv" path="res://Scenes/enemy.tscn" id="3_jjvhh"]
 [ext_resource type="Script" uid="uid://dexh8cgr4i74r" path="res://Scripts/2_nd_row.gd" id="4_kry3j"]
 [ext_resource type="PackedScene" uid="uid://egd8j6mhykdx" path="res://Scenes/restart.tscn" id="7_6bp64"]
-[ext_resource type="AudioStream" uid="uid://bwh5rfragn4bs" path="res://Assets/Music/SpaceInvadersTheme.mp3" id="8_344ge"]
 
 [sub_resource type="GDScript" id="GDScript_8gbba"]
 script/source = "extends CharacterBody2D
@@ -405,7 +404,6 @@ offset_right = 1125.0
 offset_bottom = 629.0
 
 [node name="Theme_Song" type="AudioStreamPlayer2D" parent="." unique_id=1864264408]
-stream = ExtResource("8_344ge")
 autoplay = true
 
 [connection signal="area_entered" from="1st_Row/Enemy/Enraged_1" to="1st_Row/Enemy" method="_on_enraged_1_area_entered"]
