@@ -3,9 +3,18 @@
 [ext_resource type="Script" uid="uid://ergac6fhd5e1" path="res://cover.gd" id="1_xsm4k"]
 [ext_resource type="Texture2D" uid="uid://ch3ofepnnu86x" path="res://Assets/Sprites/Asteroid/AsteroidHit.png" id="2_tu51b"]
 [ext_resource type="Texture2D" uid="uid://byjdg0edup8" path="res://Assets/Sprites/Asteroid/Asteroid.png" id="2_xsm4k"]
+[ext_resource type="Texture2D" uid="uid://clq0xl23srtbj" path="res://Assets/Sprites/Asteroid/Animation/AsteroidDestroyed2.png" id="3_rdlnw"]
+[ext_resource type="Texture2D" uid="uid://cfjce0e4m1oxb" path="res://Assets/Sprites/Asteroid/Animation/AsteroidDestroyed3.png" id="4_k6hqr"]
+[ext_resource type="Texture2D" uid="uid://busnp1n4llrd4" path="res://Assets/Sprites/Asteroid/Animation/AsteroidDestroyed4.png" id="5_ni4ex"]
+[ext_resource type="Texture2D" uid="uid://ch0a8pw5lctoo" path="res://Assets/Sprites/Asteroid/Animation/AsteroidDestroyed5.png" id="6_6slro"]
+[ext_resource type="Texture2D" uid="uid://cmuepuyxln44q" path="res://Assets/Sprites/Asteroid/Animation/AsteroidDestroyed6.png" id="7_qpbi6"]
+[ext_resource type="Texture2D" uid="uid://b750stdmxpvl6" path="res://Assets/Sprites/Asteroid/Animation/AsteroidDestroyed7.png" id="8_1s3uj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tu51b"]
 radius = 15.0
+
+[sub_resource type="Animation" id="Animation_rdlnw"]
+resource_name = "Despawn_Particles"
 
 [sub_resource type="Animation" id="Animation_2pw40"]
 length = 0.001
@@ -36,7 +45,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:rotation")
+tracks/2/path = NodePath(".:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -48,34 +57,34 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:modulate")
+tracks/3/path = NodePath("Sprite2D:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Vector2(0, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath(".:rotation")
+tracks/4/path = NodePath("Despawning_Particles:emitting")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_tu51b"]
-loop_mode = 2
+length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/path = NodePath(".:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -87,26 +96,38 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/path = NodePath("Sprite2D:texture")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0.17641911, 0.17641908, 0.17641908, 1)]
+"times": PackedFloat32Array(0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_rdlnw"), ExtResource("4_k6hqr"), ExtResource("5_ni4ex"), ExtResource("6_6slro"), ExtResource("7_qpbi6"), ExtResource("8_1s3uj")]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:rotation")
+tracks/2/path = NodePath("Sprite2D:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Despawning_Particles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_bckme"]
@@ -139,6 +160,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6wsw5"]
 _data = {
+&"Despawn_Particles": SubResource("Animation_rdlnw"),
 &"RESET": SubResource("Animation_2pw40"),
 &"cover_destroyed": SubResource("Animation_tu51b"),
 &"impact": SubResource("Animation_bckme")
@@ -156,7 +178,7 @@ point_count = 2
 script = ExtResource("1_xsm4k")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1299392230]
-scale = Vector2(0.703125, 0.515625)
+scale = Vector2(0.703125, 0.6484375)
 texture = ExtResource("2_xsm4k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1516954149]
@@ -262,12 +284,35 @@ scale_amount_max = 6.0
 scale_amount_curve = SubResource("Curve_tu51b")
 color = Color(0.5176471, 0.49411765, 0.5294118, 1)
 
-[node name="Resume_Rotate_Timer" type="Timer" parent="." unique_id=535559103]
+[node name="Timers" type="Node2D" parent="." unique_id=1245971840]
+
+[node name="Resume_Rotate_Timer" type="Timer" parent="Timers" unique_id=535559103]
 unique_name_in_owner = true
 one_shot = true
+
+[node name="Despawn_Timer" type="Timer" parent="Timers" unique_id=69959040]
+unique_name_in_owner = true
+wait_time = 0.4
+
+[node name="Despawning_Particles" type="CPUParticles2D" parent="." unique_id=746253966]
+position = Vector2(-2, -1)
+emitting = false
+amount = 15
+lifetime = 0.7
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 100)
+initial_velocity_min = 25.0
+initial_velocity_max = 50.0
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_tu51b")
+color = Color(0.5176471, 0.49411765, 0.5294118, 1)
 
 [connection signal="area_entered" from="Emit_Particles_up" to="." method="_on_emit_particles_up_area_entered"]
 [connection signal="area_entered" from="Emit_Particles_left" to="." method="_on_emit_particles_left_area_entered"]
 [connection signal="area_entered" from="Emit_Particles_right" to="." method="_on_emit_particles_right_area_entered"]
 [connection signal="area_entered" from="Emit_Particles_bottom" to="." method="_on_emit_particles_bottom_area_entered"]
-[connection signal="timeout" from="Resume_Rotate_Timer" to="." method="_on_resume_rotate_timer_timeout"]
+[connection signal="timeout" from="Timers/Resume_Rotate_Timer" to="." method="_on_resume_rotate_timer_timeout"]
+[connection signal="timeout" from="Timers/Despawn_Timer" to="." method="_on_despawn_timer_timeout"]

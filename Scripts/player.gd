@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 		%AnimationPlayer.play("static")
 		pass
 	
-	if Input.is_action_just_pressed("shoot") and max_per_shot == 0:
+	if Input.is_action_pressed("shoot") and max_per_shot == 0:
 		var shot_audio: int = randi_range(1, 2)
 		if shot_audio == 1:
 			%Shoot.stream = preload("res://Assets/SFX/Laser_shot.mp3")
