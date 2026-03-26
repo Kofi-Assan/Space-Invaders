@@ -16,7 +16,10 @@ script/source = "extends CharacterBody2D
 @onready var shoot_point: Marker2D = %Marker2D
 @onready var cooldown: Timer = $Cooldown
 @onready var enemy_sight: RayCast2D = $RayCast2D
-#@onready var sprite_2d: Sprite2D = $Sprite2D
+@onready var destroyed: AnimationPlayer = $AnimationPlayer
+@onready var despawn_timer: Timer = $Despawn_timer
+@onready var pause: AnimationPlayer
+var active: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -41,11 +44,15 @@ func _on_hitbox_area_entered(_area: Area2D) -> void:
 	pass # Replace with function body.
 
 func die():
+	active = false
 	var death_sound = preload(\"res://Scenes/death_sound.tscn\").instantiate()
 	death_sound.global_position = global_position
 	get_tree().current_scene.add_child(death_sound)
 	death_sound.play()
-	queue_free()
+	if active == false:
+		cooldown.paused = true
+		destroyed.play(\"exploding\")
+		despawn_timer.start()
 	pass
 
 func _on_cooldown_timeout() -> void:
@@ -101,6 +108,10 @@ func _on_friendly_cone_4_body_exited(body: CharacterBody2D) -> void:
 
 func _on_enraged_1_area_entered(area: Area2D) -> void:
 	print(\"RAGEEEEEE\")
+	pass # Replace with function body.
+
+func _on_despawn_timer_timeout() -> void:
+	queue_free()
 	pass # Replace with function body.
 "
 
@@ -252,7 +263,7 @@ script = SubResource("GDScript_8gbba")
 collision_layer = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="1st_Row/Enemy/Enraged_1" unique_id=650527194]
-position = Vector2(6.556509e-07, -29.999985)
+position = Vector2(6.556509e-07, -45.999985)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_344ge")
 
@@ -266,7 +277,7 @@ script = SubResource("GDScript_8gbba")
 collision_layer = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="1st_Row/Enemy2/Enraged_2" unique_id=985423262]
-position = Vector2(6.556509e-07, -29.999985)
+position = Vector2(6.556509e-07, -45.999985)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_344ge")
 
@@ -280,7 +291,7 @@ script = SubResource("GDScript_8gbba")
 collision_layer = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="1st_Row/Enemy3/Enraged_3" unique_id=162952362]
-position = Vector2(6.556509e-07, -29.999985)
+position = Vector2(6.556509e-07, -45.999985)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_344ge")
 
@@ -294,7 +305,7 @@ script = SubResource("GDScript_8gbba")
 collision_layer = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="1st_Row/Enemy4/Enraged_4" unique_id=1671380018]
-position = Vector2(6.556509e-07, -29.999985)
+position = Vector2(6.556509e-07, -45.999985)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_344ge")
 
@@ -402,8 +413,16 @@ offset_top = 515.0
 offset_right = 1125.0
 offset_bottom = 629.0
 
-[node name="Theme_Song" type="AudioStreamPlayer2D" parent="." unique_id=1864264408]
-autoplay = true
+[node name="Stars" type="Node2D" parent="." unique_id=1048954671]
+z_index = -1
+position = Vector2(-968, -216)
+
+[node name="Sprite2D" type="Sprite2D" parent="Stars" unique_id=1514364870]
+
+[node name="Rocks" type="Node2D" parent="." unique_id=259786048]
+position = Vector2(-968, -216)
+
+[node name="Sprite2D" type="Sprite2D" parent="Rocks" unique_id=380666574]
 
 [connection signal="area_entered" from="1st_Row/Enemy/Enraged_1" to="1st_Row/Enemy" method="_on_enraged_1_area_entered"]
 [connection signal="area_entered" from="2nd_Row/Enemy5/Friendly_Cone" to="2nd_Row/Enemy5" method="_on_friendly_cone_area_entered"]

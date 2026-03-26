@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://46um87ubg40t"]
 
-[ext_resource type="Texture2D" uid="uid://43amorwh4brn" path="res://icon.svg" id="1_3bpu6"]
+[ext_resource type="Texture2D" uid="uid://buj8v2vepltll" path="res://Assets/Sprites/Bullets/Bullet.png" id="2_bqgk5"]
 [ext_resource type="Script" uid="uid://di0byy24mqum5" path="res://Scripts/projectiles.gd" id="2_vws8a"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vws8a"]
-radius = 12.0
+radius = 3.0
 
 [node name="Projectiles" type="Area2D" unique_id=1070919569]
+scale = Vector2(4, 4)
 collision_mask = 3
 script = ExtResource("2_vws8a")
 speed = 400
@@ -14,9 +15,15 @@ speed = 400
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1831800045]
 z_index = -1
 scale = Vector2(0.1953125, 0.53125)
-texture = ExtResource("1_3bpu6")
+texture = ExtResource("2_bqgk5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=622009078]
+position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_vws8a")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="." unique_id=758347985]
+emitting = false
+lifetime = 0.5
+one_shot = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

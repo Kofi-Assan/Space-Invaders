@@ -6,23 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://dmn5h3x2gmh3h" path="res://Assets/Sprites/Enemy/Enemy1.png" id="3_ghaa6"]
 [ext_resource type="Texture2D" uid="uid://bkxkmdmvwpos0" path="res://Assets/Sprites/Enemy/Enemy2.png" id="4_1dp5w"]
 [ext_resource type="Texture2D" uid="uid://boy1tvos6hsgt" path="res://Assets/Sprites/Enemy/Enemy3.png" id="5_auwsv"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_8uf12"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_ghaa6")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_1dp5w")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_auwsv")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[ext_resource type="Texture2D" uid="uid://c8de78k86pj0m" path="res://Assets/Sprites/Enemy/EnemyDeath/EnemyExplodes1.png" id="6_vt4ob"]
+[ext_resource type="Texture2D" uid="uid://r7420pcwrpb7" path="res://Assets/Sprites/Enemy/Enemy.png" id="7_1dp5w"]
+[ext_resource type="Texture2D" uid="uid://c56hk6461weh5" path="res://Assets/Sprites/Enemy/EnemyDeath/EnemyExplodes2.png" id="7_hgeoe"]
+[ext_resource type="Texture2D" uid="uid://by0m5d3d4fa4p" path="res://Assets/Sprites/Enemy/EnemyDeath/EnemyExplodes4.png" id="8_tk7xo"]
+[ext_resource type="Texture2D" uid="uid://cp0yvajdr7edi" path="res://Assets/Sprites/Enemy/EnemyDeath/EnemyExplodes5.png" id="9_scl1n"]
+[ext_resource type="Texture2D" uid="uid://dvmqcova05nw5" path="res://Assets/Sprites/Enemy/EnemyDeath/EnemyExplodes6.png" id="10_dhkrs"]
+[ext_resource type="Texture2D" uid="uid://txl0mrltspi" path="res://Assets/Sprites/Enemy/EnemyDeath/EnemyExplodes7.png" id="11_5xdhn"]
+[ext_resource type="Texture2D" uid="uid://qf56sbadu03n" path="res://Assets/Sprites/Enemy/EnemyDeath/EnemyExplodes8.png" id="12_4jyny"]
+[ext_resource type="Texture2D" uid="uid://do14ew6glwy01" path="res://Assets/Sprites/Enemy/EnemyDeath/EnemyExplodes9.png" id="13_vh8xy"]
+[ext_resource type="Texture2D" uid="uid://bfk5djeilpw7m" path="res://Assets/Sprites/Enemy/EnemyDeath/EnemyExplodes3.png" id="14_qjcj6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hghv2"]
 radius = 19.026299
@@ -30,15 +23,71 @@ radius = 19.026299
 [sub_resource type="CircleShape2D" id="CircleShape2D_1f0kj"]
 radius = 18.788294
 
+[sub_resource type="Animation" id="Animation_auwsv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_ghaa6")]
+}
+
+[sub_resource type="Animation" id="Animation_8uf12"]
+resource_name = "default"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_ghaa6"), ExtResource("4_1dp5w"), ExtResource("5_auwsv"), ExtResource("7_1dp5w")]
+}
+
+[sub_resource type="Animation" id="Animation_4ycey"]
+resource_name = "explosion"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("6_vt4ob"), ExtResource("7_hgeoe"), ExtResource("14_qjcj6"), ExtResource("8_tk7xo"), ExtResource("9_scl1n"), ExtResource("10_dhkrs"), ExtResource("11_5xdhn"), ExtResource("11_5xdhn"), ExtResource("12_4jyny"), ExtResource("13_vh8xy")]
+}
+
+[sub_resource type="Animation" id="Animation_hgeoe"]
+resource_name = "pause"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8cim4"]
+_data = {
+&"RESET": SubResource("Animation_auwsv"),
+&"default": SubResource("Animation_8uf12"),
+&"exploding": SubResource("Animation_4ycey"),
+&"pause": SubResource("Animation_hgeoe")
+}
+
 [node name="Enemy" type="CharacterBody2D" unique_id=2112857109]
 collision_layer = 2
 script = ExtResource("1_1f0kj")
 bullet = ExtResource("2_287tu")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=2002750754]
-sprite_frames = SubResource("SpriteFrames_8uf12")
-autoplay = "default"
-frame_progress = 0.8537488
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=869305273]
+texture = ExtResource("3_ghaa6")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1633313879]
 
@@ -63,5 +112,13 @@ position = Vector2(0, 38)
 scale = Vector2(8, 8)
 target_position = Vector2(2, 1219)
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1388026187]
+libraries/ = SubResource("AnimationLibrary_8cim4")
+autoplay = &"default"
+
+[node name="Despawn_timer" type="Timer" parent="." unique_id=2140688496]
+one_shot = true
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="Cooldown" to="." method="_on_cooldown_timeout"]
+[connection signal="timeout" from="Despawn_timer" to="." method="_on_despawn_timer_timeout"]

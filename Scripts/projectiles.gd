@@ -10,7 +10,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var fired_rocket = create_tween()
 	fired_rocket.tween_property(self, "global_position", global_position + Vector2.UP * speed,  1)
-	
+	$CPUParticles2D.emitting = true
 	#fired_rocket.tween_property(self, "global_position", Vector2.LEFT * 10, 1)
 	#fired_rocket.tween_property(self, "global_position", Vector2.RIGHT * 10, .5)
 	pass

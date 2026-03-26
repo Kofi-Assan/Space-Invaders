@@ -11,6 +11,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var move_tween = create_tween()
 	move_tween.tween_property(self, "global_position", global_position + Vector2.DOWN * bullet_speed, 2)
+	$CPUParticles2D.emitting = true
 	pass
 
 func _on_area_entered(area: Area2D) -> void:

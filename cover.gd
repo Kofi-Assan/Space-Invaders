@@ -28,6 +28,7 @@ func _on_emit_particles_up_area_entered(area: Area2D) -> void:
 		active == false
 		%Resume_Rotate_Timer.stop()
 		$AnimationPlayer.play("cover_destroyed")
+		$Sprite2D.rotation_degrees = 0
 		print("DESTROYEDDDD")
 		%Despawn_Timer.start()
 	pass # Replace with function body.
@@ -42,6 +43,7 @@ func _on_emit_particles_left_area_entered(area: Area2D) -> void:
 	if hits_taken == 3:
 		%Resume_Rotate_Timer.stop()
 		$AnimationPlayer.play("cover_destroyed")
+		$Sprite2D.rotation_degrees = 0
 		print("DESTROYEDDDD")
 		%Despawn_Timer.start()
 	pass # Replace with function body.
@@ -56,6 +58,7 @@ func _on_emit_particles_right_area_entered(area: Area2D) -> void:
 	if hits_taken == 3:
 		%Resume_Rotate_Timer.stop()
 		$AnimationPlayer.play("cover_destroyed")
+		$Sprite2D.rotation_degrees = 0
 		print("DESTROYEDDDD")
 		%Despawn_Timer.start()
 	pass # Replace with function body.
@@ -70,6 +73,7 @@ func _on_emit_particles_bottom_area_entered(area: Area2D) -> void:
 	if hits_taken == 3:
 		%Resume_Rotate_Timer.stop()
 		$AnimationPlayer.play("cover_destroyed")
+		$Sprite2D.rotation_degrees = 0
 		print("DESTROYEDDDD")
 		%Despawn_Timer.start()
 	pass # Replace with function body.
