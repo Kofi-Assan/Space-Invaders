@@ -6,17 +6,20 @@
 [ext_resource type="PackedScene" uid="uid://boyts4wptgndq" path="res://Scenes/cover.tscn" id="3_8gbba"]
 [ext_resource type="PackedScene" uid="uid://bmnsshbidjbrv" path="res://Scenes/enemy.tscn" id="3_jjvhh"]
 [ext_resource type="Script" uid="uid://dexh8cgr4i74r" path="res://Scripts/2_nd_row.gd" id="4_kry3j"]
+[ext_resource type="PackedScene" uid="uid://dmjv1nxr1a58i" path="res://Scenes/enemy_dead_position.tscn" id="5_344ge"]
 [ext_resource type="PackedScene" uid="uid://egd8j6mhykdx" path="res://Scenes/restart.tscn" id="7_6bp64"]
 
 [sub_resource type="GDScript" id="GDScript_8gbba"]
 script/source = "extends CharacterBody2D
 
 @export var bullet: PackedScene
+@export var dead_position: PackedScene
 @export var max_shot: int
 @onready var shoot_point: Marker2D = %Marker2D
 @onready var cooldown: Timer = $Cooldown
 @onready var enemy_sight: RayCast2D = $RayCast2D
 @onready var destroyed: AnimationPlayer = $AnimationPlayer
+@onready var PAUSE: AnimationPlayer = %AnimationPlayer
 @onready var despawn_timer: Timer = $Despawn_timer
 var active: bool = true
 
@@ -167,6 +170,18 @@ tracks/2/keys = {
 "update": 0,
 "values": [0.8]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("%Enemy:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(164, 206)]
+}
 
 [sub_resource type="Animation" id="Animation_21xkr"]
 resource_name = "enemy_moveLeft"
@@ -225,11 +240,27 @@ tracks/1/keys = {
 "values": [0.8]
 }
 
+[sub_resource type="Animation" id="Animation_344ge"]
+resource_name = "pause"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Enemy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(164, 206)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_344ge"]
 _data = {
 &"RESET": SubResource("Animation_kry3j"),
 &"enemy_move": SubResource("Animation_21xkr"),
-&"new_animation": SubResource("Animation_6bp64")
+&"new_animation": SubResource("Animation_6bp64"),
+&"pause": SubResource("Animation_344ge")
 }
 
 [node name="main" type="Node2D" unique_id=594243543]
@@ -237,7 +268,7 @@ script = ExtResource("1_21xkr")
 
 [node name="Player" parent="." unique_id=2134793376 instance=ExtResource("1_jjgbg")]
 unique_name_in_owner = true
-position = Vector2(500, 587)
+position = Vector2(630, 587)
 scale = Vector2(2, 2)
 
 [node name="Timers" type="Node2D" parent="." unique_id=143317393]
@@ -258,13 +289,14 @@ unique_name_in_owner = true
 position = Vector2(164, 206)
 scale = Vector2(0.5, 0.5)
 script = SubResource("GDScript_8gbba")
+dead_position = ExtResource("5_344ge")
 
 [node name="Enraged_1" type="Area2D" parent="1st_Row/Enemy" unique_id=841430622]
 collision_layer = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="1st_Row/Enemy/Enraged_1" unique_id=650527194]
-position = Vector2(6.556509e-07, -45.999985)
-rotation = 1.5707964
+position = Vector2(6.556509e-07, -51.999985)
+rotation = 3.1415927
 shape = SubResource("CapsuleShape2D_344ge")
 
 [node name="Enemy2" parent="1st_Row" unique_id=2112857109 instance=ExtResource("3_jjvhh")]
@@ -272,13 +304,14 @@ unique_name_in_owner = true
 position = Vector2(451, 206)
 scale = Vector2(0.5, 0.5)
 script = SubResource("GDScript_8gbba")
+dead_position = null
 
 [node name="Enraged_2" type="Area2D" parent="1st_Row/Enemy2" unique_id=1888027233]
 collision_layer = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="1st_Row/Enemy2/Enraged_2" unique_id=985423262]
-position = Vector2(6.556509e-07, -45.999985)
-rotation = 1.5707964
+position = Vector2(6.556509e-07, -51.999985)
+rotation = 3.1415927
 shape = SubResource("CapsuleShape2D_344ge")
 
 [node name="Enemy3" parent="1st_Row" unique_id=1530057044 instance=ExtResource("3_jjvhh")]
@@ -286,13 +319,14 @@ unique_name_in_owner = true
 position = Vector2(727, 206)
 scale = Vector2(0.5, 0.5)
 script = SubResource("GDScript_8gbba")
+dead_position = null
 
 [node name="Enraged_3" type="Area2D" parent="1st_Row/Enemy3" unique_id=506925902]
 collision_layer = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="1st_Row/Enemy3/Enraged_3" unique_id=162952362]
-position = Vector2(6.556509e-07, -45.999985)
-rotation = 1.5707964
+position = Vector2(6.556509e-07, -51.999985)
+rotation = 3.1415927
 shape = SubResource("CapsuleShape2D_344ge")
 
 [node name="Enemy4" parent="1st_Row" unique_id=1888930164 instance=ExtResource("3_jjvhh")]
@@ -300,13 +334,14 @@ unique_name_in_owner = true
 position = Vector2(992, 206)
 scale = Vector2(0.5, 0.5)
 script = SubResource("GDScript_8gbba")
+dead_position = null
 
 [node name="Enraged_4" type="Area2D" parent="1st_Row/Enemy4" unique_id=276393980]
 collision_layer = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="1st_Row/Enemy4/Enraged_4" unique_id=1671380018]
-position = Vector2(6.556509e-07, -45.999985)
-rotation = 1.5707964
+position = Vector2(6.556509e-07, -51.999985)
+rotation = 3.1415927
 shape = SubResource("CapsuleShape2D_344ge")
 
 [node name="2nd_Row" type="Node2D" parent="." unique_id=843722149]
@@ -318,6 +353,7 @@ speed = 10
 unique_name_in_owner = true
 position = Vector2(279, 73)
 script = SubResource("GDScript_8gbba")
+dead_position = null
 
 [node name="Friendly_Cone" type="Area2D" parent="2nd_Row/Enemy5" unique_id=186333317]
 position = Vector2(-558, -146)
@@ -333,6 +369,7 @@ shape = SubResource("CapsuleShape2D_21xkr")
 [node name="Enemy6" parent="2nd_Row" unique_id=1828929500 instance=ExtResource("3_jjvhh")]
 position = Vector2(592, 73)
 script = SubResource("GDScript_8gbba")
+dead_position = null
 
 [node name="Friendly_Cone2" type="Area2D" parent="2nd_Row/Enemy6" unique_id=908338086]
 collision_layer = 4
@@ -346,6 +383,7 @@ shape = SubResource("CapsuleShape2D_6bp64")
 [node name="Enemy7" parent="2nd_Row" unique_id=1691487204 instance=ExtResource("3_jjvhh")]
 position = Vector2(843, 73)
 script = SubResource("GDScript_8gbba")
+dead_position = null
 
 [node name="Friendly_Cone3" type="Area2D" parent="2nd_Row/Enemy7" unique_id=756802223]
 position = Vector2(-2, 0)
@@ -360,6 +398,7 @@ shape = SubResource("CapsuleShape2D_6bp64")
 [node name="Enemy8" parent="2nd_Row" unique_id=593877438 instance=ExtResource("3_jjvhh")]
 position = Vector2(1056, 73)
 script = SubResource("GDScript_8gbba")
+dead_position = null
 
 [node name="Friendly_Cone4" type="Area2D" parent="2nd_Row/Enemy8" unique_id=2089299091]
 collision_layer = 4
