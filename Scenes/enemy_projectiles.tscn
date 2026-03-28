@@ -11,7 +11,7 @@ rotation = -3.1415927
 scale = Vector2(7, 7)
 collision_mask = 9
 script = ExtResource("1_8ho8k")
-bullet_speed = 900
+bullet_speed = 800
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=232566839]
 scale = Vector2(0.08886719, 0.19140625)

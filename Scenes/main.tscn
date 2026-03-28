@@ -19,9 +19,10 @@ script/source = "extends CharacterBody2D
 @onready var cooldown: Timer = $Cooldown
 @onready var enemy_sight: RayCast2D = $RayCast2D
 @onready var destroyed: AnimationPlayer = $AnimationPlayer
-@onready var PAUSE: AnimationPlayer = %AnimationPlayer
 @onready var despawn_timer: Timer = $Despawn_timer
+@onready var enemy_cover: AnimationPlayer = $AnimationPlayer
 var active: bool = true
+signal victory
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -52,10 +53,14 @@ func die():
 	get_tree().current_scene.add_child(death_sound)
 	death_sound.play()
 	if active == false:
+		Autoload.enemy_death_count += 1
+		print(\"COUNT: \" + str(Autoload.enemy_death_count))
 		enemy_sight.enabled = false
 		cooldown.paused = true
 		destroyed.play(\"exploding\")
 		despawn_timer.start()
+	if Autoload.enemy_death_count == 8:
+			Autoload._victory_screen()
 	pass
 
 func _on_cooldown_timeout() -> void:
@@ -463,6 +468,7 @@ position = Vector2(-968, -216)
 
 [node name="Sprite2D" type="Sprite2D" parent="Rocks" unique_id=380666574]
 
+[connection signal="victory" from="1st_Row/Enemy" to="1st_Row/Enemy" method="_on_victory"]
 [connection signal="area_entered" from="1st_Row/Enemy/Enraged_1" to="1st_Row/Enemy" method="_on_enraged_1_area_entered"]
 [connection signal="area_entered" from="2nd_Row/Enemy5/Friendly_Cone" to="2nd_Row/Enemy5" method="_on_friendly_cone_area_entered"]
 [connection signal="body_entered" from="2nd_Row/Enemy5/Friendly_Cone" to="2nd_Row/Enemy5" method="_on_friendly_cone_body_entered"]
@@ -473,6 +479,5 @@ position = Vector2(-968, -216)
 [connection signal="body_exited" from="2nd_Row/Enemy7/Friendly_Cone3" to="2nd_Row/Enemy7" method="_on_friendly_cone_3_body_exited"]
 [connection signal="body_entered" from="2nd_Row/Enemy8/Friendly_Cone4" to="2nd_Row/Enemy8" method="_on_friendly_cone_4_body_entered"]
 [connection signal="body_exited" from="2nd_Row/Enemy8/Friendly_Cone4" to="2nd_Row/Enemy8" method="_on_friendly_cone_4_body_exited"]
-[connection signal="area_entered" from="Covers/Cover" to="Covers/Cover" method="_on_area_entered"]
 [connection signal="area_entered" from="Covers/Cover2" to="Covers/Cover2" method="_on_area_entered"]
 [connection signal="area_entered" from="Covers/Cover3" to="Covers/Cover3" method="_on_area_entered"]

@@ -13,4 +13,5 @@ func _process(delta: float) -> void:
 
 func _on_pressed() -> void:
 	get_tree().reload_current_scene()
+	Autoload.enemy_death_count = 0
 	pass # Replace with function body.

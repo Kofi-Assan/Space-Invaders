@@ -4,6 +4,8 @@ var rotate_timer: int
 var hits_taken: int
 var active: bool = true
 @export var despawn_particles: PackedScene
+@onready var enemy_cover: AnimationPlayer = $AnimationPlayer
+signal victory
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,11 +37,12 @@ func _on_emit_particles_up_area_entered(area: Area2D) -> void:
 
 
 func _on_emit_particles_left_area_entered(area: Area2D) -> void:
-	%Bullet_Hit_left.emitting = true
-	hits_taken += 1
-	$AnimationPlayer.play("impact")
-	stop_rotate()
-	%Resume_Rotate_Timer.start()
+	if active or hits_taken != 3:
+		%Bullet_Hit_left.emitting = true
+		hits_taken += 1
+		$AnimationPlayer.play("impact")
+		stop_rotate()
+		%Resume_Rotate_Timer.start()
 	if hits_taken == 3:
 		%Resume_Rotate_Timer.stop()
 		$AnimationPlayer.play("cover_destroyed")
@@ -50,11 +53,12 @@ func _on_emit_particles_left_area_entered(area: Area2D) -> void:
 
 
 func _on_emit_particles_right_area_entered(area: Area2D) -> void:
-	%Bullet_Hit_right.emitting = true
-	hits_taken += 1
-	$AnimationPlayer.play("impact")
-	stop_rotate()
-	%Resume_Rotate_Timer.start()
+	if active or hits_taken != 3:
+		%Bullet_Hit_right.emitting = true
+		hits_taken += 1
+		$AnimationPlayer.play("impact")
+		stop_rotate()
+		%Resume_Rotate_Timer.start()
 	if hits_taken == 3:
 		%Resume_Rotate_Timer.stop()
 		$AnimationPlayer.play("cover_destroyed")
@@ -65,11 +69,12 @@ func _on_emit_particles_right_area_entered(area: Area2D) -> void:
 
 
 func _on_emit_particles_bottom_area_entered(area: Area2D) -> void:
-	%Bullet_Hit_bottom.emitting = true
-	hits_taken += 1
-	$AnimationPlayer.play("impact")
-	stop_rotate()
-	%Resume_Rotate_Timer.start()
+	if active or hits_taken != 3:
+		%Bullet_Hit_bottom.emitting = true
+		hits_taken += 1
+		$AnimationPlayer.play("impact")
+		stop_rotate()
+		%Resume_Rotate_Timer.start()
 	if hits_taken == 3:
 		%Resume_Rotate_Timer.stop()
 		$AnimationPlayer.play("cover_destroyed")
@@ -89,4 +94,21 @@ func _on_resume_rotate_timer_timeout() -> void:
 
 func _on_despawn_timer_timeout() -> void:
 	$".".queue_free()
+	pass # Replace with function body.
+
+func _on_victory_despawn_timeout() -> void:
+	$AnimationPlayer.stop()
+	$".".queue_free()
+	pass # Replace with function body.
+
+
+func _on_enemy_victory() -> void:
+	%Victory_Despawn.start()
+	$AnimationPlayer.play("Victory_screen")
+	pass # Replace with function body.
+
+
+func _on_enemy_2_victory() -> void:
+	%Victory_Despawn.start()
+	$AnimationPlayer.play("Victory_screen")
 	pass # Replace with function body.
