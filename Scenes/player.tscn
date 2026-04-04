@@ -97,6 +97,10 @@ position = Vector2(0, -35)
 unique_name_in_owner = true
 wait_time = 0.5
 
+[node name="Lift_off" type="Timer" parent="Timers" unique_id=603472374]
+unique_name_in_owner = true
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=646789332]
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_vgqql")

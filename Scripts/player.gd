@@ -11,7 +11,6 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	$"../Blast_zone/CollisionShape2D".disabled = true
 	var direction = Input.get_axis("left", "right")
 	move_and_slide()
 	position.x += direction * speed * delta
@@ -39,18 +38,20 @@ func _process(delta: float) -> void:
 		max_per_shot += 1
 		%Cooldown.start()
 		
-	if Autoload.enemy_death_count == 8:
-		%Lift_Off.play("mission_complete")
+	if Autoload.enemy_death_count == 1:
+		%Lift_off.start()
 		var mission_complete = create_tween()
-		$"../Blast_zone/CollisionShape2D".disabled = false
 		mission_complete.tween_property(%Player, "global_position", Vector2(530,587), 1)
+		print("Timer Started")
+		await %Lift_off.timeout
+		print("LIFTOFFFFF")
+		
 		#_on_blast_zone_body_entered()
 	pass
 
 func _on_cooldown_timeout() -> void:
 	max_per_shot = 0
 	pass # Replace with function body.
-	
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	%Death_sound.play()
@@ -60,11 +61,4 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	you_died.play()
 	queue_free()
 	%Restart.show()
-	pass # Replace with function body.
-
-
-func _on_blast_zone_body_entered(body: Node2D) -> void:
-	$"../Blast_zone/CollisionShape2D".disabled = false
-	%Lift_Off.play("lift")
-	print("ENETERED")
 	pass # Replace with function body.

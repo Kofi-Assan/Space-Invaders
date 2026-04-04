@@ -12,7 +12,6 @@
 script/source = "extends CharacterBody2D
 
 @export var bullet: PackedScene
-@export var dead_position: PackedScene
 @export var max_shot: int
 @onready var shoot_point: Marker2D = %Marker2D
 @onready var cooldown: Timer = $Cooldown
@@ -58,9 +57,6 @@ func die():
 		cooldown.paused = true
 		destroyed.play(\"exploding\")
 		despawn_timer.start()
-	if Autoload.enemy_death_count == 8:
-			Autoload._victory_screen()
-	pass
 
 func _on_cooldown_timeout() -> void:
 	print(\"Timer Up\")
@@ -121,21 +117,6 @@ func _on_despawn_timer_timeout() -> void:
 	queue_free()
 	pass # Replace with function body.
 "
-
-[sub_resource type="PackedScene" id="PackedScene_6bp64"]
-_bundled = {
-"conn_count": 0,
-"conns": PackedInt32Array(),
-"editable_instances": [],
-"id_paths": [],
-"names": PackedStringArray("Enemy_Dead_position", "Marker2D"),
-"node_count": 1,
-"node_ids": PackedInt32Array(1763390414),
-"node_paths": [],
-"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 0, 0),
-"variants": [],
-"version": 3
-}
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_344ge"]
 radius = 20.0
@@ -323,9 +304,6 @@ _data = {
 &"mission_complete": SubResource("Animation_hptm8")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_6bp64"]
-radius = 33.01515
-
 [node name="main" type="Node2D" unique_id=594243543]
 script = ExtResource("1_21xkr")
 
@@ -353,7 +331,6 @@ unique_name_in_owner = true
 position = Vector2(164, 206)
 scale = Vector2(0.5, 0.5)
 script = SubResource("GDScript_8gbba")
-dead_position = SubResource("PackedScene_6bp64")
 
 [node name="Enraged_1" type="Area2D" parent="1st_Row/Enemy" unique_id=841430622]
 collision_layer = 10
@@ -368,7 +345,6 @@ unique_name_in_owner = true
 position = Vector2(451, 206)
 scale = Vector2(0.5, 0.5)
 script = SubResource("GDScript_8gbba")
-dead_position = null
 
 [node name="Enraged_2" type="Area2D" parent="1st_Row/Enemy2" unique_id=1888027233]
 collision_layer = 10
@@ -383,7 +359,6 @@ unique_name_in_owner = true
 position = Vector2(727, 206)
 scale = Vector2(0.5, 0.5)
 script = SubResource("GDScript_8gbba")
-dead_position = null
 
 [node name="Enraged_3" type="Area2D" parent="1st_Row/Enemy3" unique_id=506925902]
 collision_layer = 10
@@ -398,7 +373,6 @@ unique_name_in_owner = true
 position = Vector2(992, 206)
 scale = Vector2(0.5, 0.5)
 script = SubResource("GDScript_8gbba")
-dead_position = null
 
 [node name="Enraged_4" type="Area2D" parent="1st_Row/Enemy4" unique_id=276393980]
 collision_layer = 10
@@ -417,7 +391,6 @@ speed = 10
 unique_name_in_owner = true
 position = Vector2(279, 73)
 script = SubResource("GDScript_8gbba")
-dead_position = null
 
 [node name="Friendly_Cone" type="Area2D" parent="2nd_Row/Enemy5" unique_id=186333317]
 position = Vector2(-558, -146)
@@ -433,7 +406,6 @@ shape = SubResource("CapsuleShape2D_21xkr")
 [node name="Enemy6" parent="2nd_Row" unique_id=1828929500 instance=ExtResource("3_jjvhh")]
 position = Vector2(592, 73)
 script = SubResource("GDScript_8gbba")
-dead_position = null
 
 [node name="Friendly_Cone2" type="Area2D" parent="2nd_Row/Enemy6" unique_id=908338086]
 collision_layer = 4
@@ -447,7 +419,6 @@ shape = SubResource("CapsuleShape2D_6bp64")
 [node name="Enemy7" parent="2nd_Row" unique_id=1691487204 instance=ExtResource("3_jjvhh")]
 position = Vector2(843, 73)
 script = SubResource("GDScript_8gbba")
-dead_position = null
 
 [node name="Friendly_Cone3" type="Area2D" parent="2nd_Row/Enemy7" unique_id=756802223]
 position = Vector2(-2, 0)
@@ -462,7 +433,6 @@ shape = SubResource("CapsuleShape2D_6bp64")
 [node name="Enemy8" parent="2nd_Row" unique_id=593877438 instance=ExtResource("3_jjvhh")]
 position = Vector2(1056, 73)
 script = SubResource("GDScript_8gbba")
-dead_position = null
 
 [node name="Friendly_Cone4" type="Area2D" parent="2nd_Row/Enemy8" unique_id=2089299091]
 collision_layer = 4
@@ -534,14 +504,6 @@ position = Vector2(-968, -216)
 [node name="Mission_Complete_Marker" type="Marker2D" parent="." unique_id=1140440958]
 position = Vector2(530, 587)
 
-[node name="Blast_zone" type="Area2D" parent="." unique_id=927877641]
-collision_layer = 128
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Blast_zone" unique_id=1686158966]
-position = Vector2(530, 587)
-shape = SubResource("CircleShape2D_6bp64")
-disabled = true
-
 [connection signal="victory" from="1st_Row/Enemy" to="1st_Row/Enemy" method="_on_victory"]
 [connection signal="area_entered" from="1st_Row/Enemy/Enraged_1" to="1st_Row/Enemy" method="_on_enraged_1_area_entered"]
 [connection signal="area_entered" from="2nd_Row/Enemy5/Friendly_Cone" to="2nd_Row/Enemy5" method="_on_friendly_cone_area_entered"]
@@ -555,4 +517,3 @@ disabled = true
 [connection signal="body_exited" from="2nd_Row/Enemy8/Friendly_Cone4" to="2nd_Row/Enemy8" method="_on_friendly_cone_4_body_exited"]
 [connection signal="area_entered" from="Covers/Cover2" to="Covers/Cover2" method="_on_area_entered"]
 [connection signal="area_entered" from="Covers/Cover3" to="Covers/Cover3" method="_on_area_entered"]
-[connection signal="body_entered" from="Blast_zone" to="Player" method="_on_blast_zone_body_entered"]
